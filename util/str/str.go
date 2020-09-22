@@ -3,7 +3,16 @@ package str
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"github.com/sony/sonyflake"
+	"strconv"
 )
+
+var sf = sonyflake.NewSonyflake(sonyflake.Settings{})
+
+func UniqueId() string {
+	id, _ := sf.NextID()
+	return strconv.FormatUint(id, 10)
+}
 
 func Md5(str string) string {
 	h := md5.New()
