@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"github.com/sony/sonyflake"
+	"hash/crc32"
 	"strconv"
 )
 
@@ -23,4 +24,8 @@ func Md5(str string) string {
 //16位md5
 func M16(str string) string {
 	return Md5(str)[8:24]
+}
+
+func Crc32(str string) uint32 {
+	return crc32.ChecksumIEEE([]byte(str))
 }
