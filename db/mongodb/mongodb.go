@@ -55,6 +55,10 @@ func (c *CollectionHandel) UpdateMany(filter interface{}, update interface{}, op
 	return c.Collection.UpdateMany(c.ctx(), filter, update, opts...)
 }
 
+func (c *CollectionHandel) CountDocuments(filter interface{}, opts ...*options.CountOptions) (int64, error) {
+	return c.Collection.CountDocuments(c.ctx(), filter, opts...)
+}
+
 func (c *CollectionHandel) Upsert(data interface{}) (*mongo.UpdateResult, error) {
 	q, u, err := parseData(data)
 
