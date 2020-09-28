@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"context"
+	"github.com/never-afk/Devloop/db"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -151,9 +152,24 @@ func Connect(config *Config) (c *Client, err error) {
 }
 
 // 实例化操作对象
-func (c *Client) Table(tableName string) *CollectionHandel {
+func (c *Client) Table(tableName interface{}) *CollectionHandel {
+
+	var name string
+	if obj, ok := tableName.(db.Table); ok {
+		name = obj.TableName()
+	}
+
+	switch tableName.(type) {
+	case db.Table:
+		name = tableName.(db.Table).TableName()
+	case string:
+		name = tableName.(string)
+	default:
+		panic(`not support tableName type`)
+	}
+
 	return &CollectionHandel{
-		Collection: c.Database(c.conf.DatabaseName).Collection(tableName),
+		Collection: c.Database(c.conf.DatabaseName).Collection(name),
 		timeOut:    c.conf.TimeOut,
 	}
 }
