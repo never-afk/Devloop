@@ -29,3 +29,8 @@ func M16(str string) string {
 func Crc32(str string) uint32 {
 	return crc32.ChecksumIEEE([]byte(str))
 }
+
+func IntVal(str string) int {
+	n, _ := strconv.Atoi(str)
+	return n
+}
