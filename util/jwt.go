@@ -54,7 +54,7 @@ func GenerateToken(id string, authName ...string) (string, error) {
 	opt := getOpt(authName...)
 	claims := Claims{
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(30 * 24 * time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(time.Duration(opt.Timeout)).Unix(),
 		},
 		id,
 		nil,
@@ -72,7 +72,7 @@ func GenerateTokenPayload(id string, payload interface{}, authName ...string) (s
 	opt := getOpt(authName...)
 	claims := Claims{
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(30 * 24 * time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(time.Duration(opt.Timeout)).Unix(),
 		},
 		id,
 		payload,
